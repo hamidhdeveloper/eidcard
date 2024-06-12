@@ -14,7 +14,7 @@ class EidCardPage extends React.Component {
         super(props);
         this.state = {
           userName: '',
-          contentVisible: true // Initially content is not visible
+          contentVisible: false // Initially content is not visible
         };
       }
 
