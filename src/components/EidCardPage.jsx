@@ -10,6 +10,8 @@ import { saveAs } from 'file-saver';
 
 
 class EidCardPage extends React.Component {
+
+
     constructor(props) {
         super(props);
         this.state = {
