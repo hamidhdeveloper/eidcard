@@ -10,30 +10,33 @@ import { saveAs } from 'file-saver';
 
 
 class EidCardPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userName: '',
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+          userName: '',
+          contentVisible: false // Initially content is not visible
+        };
+      }
 
   displayEidCard = () => {
     
-    // Extract the user's name from state
-    const { userName } = this.state;
+     // Extract the user's name from state
+     const { userName } = this.state;
 
-   // Render the name dynamically within the JSX
-   this.setState({ userName }, () => {
-    // Take a screenshot of the content with id "content"
-    html2canvas(document.getElementById('content')).then(canvas => {
-      // Convert the canvas to a data URL
-      const dataURL = canvas.toDataURL();
-
-      // Save the data URL as a file using FileSaver.js
-      saveAs(dataURL, 'eid_card.png');
-    });
-  });
-
+     // Render the name dynamically within the JSX
+     this.setState({ userName, contentVisible: true }, () => {
+       // Take a screenshot of the content with id "content"
+       html2canvas(document.getElementById('content')).then(canvas => {
+         // Convert the canvas to a data URL
+         const dataURL = canvas.toDataURL();
+ 
+         // Save the data URL as a file using FileSaver.js
+         saveAs(dataURL, 'eid_card.png');
+ 
+         // Hide the content again after taking the screenshot
+         this.setState({ contentVisible: false });
+       });
+     });
 
   };
 
@@ -71,14 +74,17 @@ class EidCardPage extends React.Component {
         <footer>
           <p>copyright © 2024, all rights reserved for 80z Coffee</p>
         </footer>
-        <div id="content">
-                {/* Dynamically rendering the name */}
-                <div style={{ position: 'absolute', top: '124px', width: 'auto', color: 'white', textAlign: 'right', padding: '2px 16px 7px 13px', fontSize: '18px',  borderRadius: '10px',  background: '#403f3e' }}>
-                    {this.state.userName}
-                </div>
-                {/* Your Eid Card image will be displayed here */}
-                <img id="eidCard" src={eidcard} alt="Eid Card" />
+        {/* Dynamically toggle the visibility of the content */}
+        {this.state.contentVisible && (
+          <div id="content">
+            {/* Dynamically rendering the name */}
+            <div style={{ position: 'absolute', top: '124px', width: 'auto', color: 'white', textAlign: 'right', padding: '2px 16px 7px 13px', fontSize: '18px',  borderRadius: '10px',  background: '#403f3e' }}>
+              {this.state.userName}
             </div>
+            {/* Your Eid Card image will be displayed here */}
+            <img id="eidCard" src={eidcard} alt="Eid Card" />
+          </div>
+        )}
       </div>
     );
   }
