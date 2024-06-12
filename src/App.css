@@ -209,3 +209,9 @@ footer p{
       width: 90%;
   }
 }
+
+@media (max-width: 935px) {
+  #content {
+    width: 100%;
+  }
+}
